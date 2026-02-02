@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">InventoryManagmentSystem</string>
+    <!--    Textos en español -->
+    <string name="tv_title">Tienda de alimentación</string>
+    <string-array name="spinner_main">
+        <item>Todos los artículos</item>
+        <item>Productos cárnicos</item>
+        <item>Productos de pescado</item>
+        <item>Productos vegetales</item>
+    </string-array>
+    <string name="btn_main">Avisos</string>
+    <string name="imgDscrip">Selecciona</string>
+    <string name="home">Inicio</string>
+    <string name="itemImg">Imagen de la categoría del artículo</string>
+    <string name="id">ID:</string>
+    <string name="name">Nombre:</string>
+    <string name="type">Categoría:</string>
+    <string name="entry">Ultimo fecha entrada:</string>
+    <string name="exit">Ultimo salida:</string>
+    <string name="quantity">Cantidad Total:</string>
+    <string name="add">Añadir</string>
+    <string name="modify">Modificar</string>
+    <string name="remove">Eliminar</string>
+    <string name="titleNotice">Notificaciónes</string>
+    <string name="create">Crear</string>
+    <string name="updating">Modificar Articulo</string>
+    <string name="update">Aplicar</string>
+    <string name="adding">Añadir Articulo</string>
+    <string name="date">Fecha:</string>
+    <string name="description">descripción:</string>
+    <string name="addMore">Añadir más(kg):</string>
+    <string name="newArticle">Nuevo articlulo</string>
+    <string name="optionAddRemove">Quitar / Añadir :</string>
+    <string name="back">Atás</string>
+
+
+
+
+
+
+
+
+
+</resources>
