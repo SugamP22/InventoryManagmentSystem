@@ -23,6 +23,7 @@
     <string name="modify">Modificar</string>
     <string name="remove">Eliminar</string>
     <string name="titleNotice">Notificaciónes</string>
+    <string name="notification_subtitle">Artículos con stock bajo</string>
     <string name="create">Crear</string>
     <string name="updating">Modificar Articulo</string>
     <string name="update">Aplicar</string>

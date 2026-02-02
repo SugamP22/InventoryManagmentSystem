@@ -21,6 +21,7 @@ import com.example.inventorymanagmentsystem.utils.ItemFilter;
 import com.example.inventorymanagmentsystem.utils.LocaleHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -29,29 +30,39 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ImageButton languageBtn;
     private TextView tvTitle;
     private AppCompatButton infoBtn;
-
     private AppCompatButton addItemBtn;
 
-    private Integer[] images = {R.drawable.imavegetal, R.drawable.imgmeat, R.drawable.imgfish};
+    private final Integer[] images = {R.drawable.imavegetal, R.drawable.imgmeat, R.drawable.imgfish};
 
+    // We keep this list to handle filtering logic
     private ArrayList<Item> itemList;
+    private ItemRepository itemRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //  Initialize UI and Repository
         connectXML();
-        ItemRepository itemRepository=new ItemRepository(this);
-        itemList = new ArrayList<>(itemRepository.getDefaultItems());
+        itemRepository = new ItemRepository(this);
 
+        // load default data if empty
+        itemRepository.seedDataBase();
+
+        // Load initial data from Database
+        loadDataFromDatabase();
+
+        //  Set up Spinner and Adapter
         spinner.setAdapter(new CategorySpinnerAdapter(this));
         CustomAdapterItems adapterItems = new CustomAdapterItems(this, itemList, images);
         mCustomLv.setAdapter(adapterItems);
 
+        // 5. Filter logic
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Filter the current itemList based on category
                 ArrayList<Item> filteredList = ItemFilter.filter(itemList, position);
                 CustomAdapterItems adapter = (CustomAdapterItems) mCustomLv.getAdapter();
                 if (adapter != null) {
@@ -63,9 +74,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
 
+    /**
+     * Helper method to pull data from Room and update our local ArrayList
+     */
+    private void loadDataFromDatabase() {
+        List<Item> dbItems = itemRepository.getAllItems();
+        itemList = new ArrayList<>(dbItems);
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data whenever we return to this screen (e.g., after adding an item)
+        loadDataFromDatabase();
+        CustomAdapterItems adapter = (CustomAdapterItems) mCustomLv.getAdapter();
+        if (adapter != null) {
+            // Reset spinner to "All" (position 0) or just refresh current view
+            adapter.updateList(itemList);
+            spinner.setSelection(0);
+        }
     }
 
     private void connectXML() {
@@ -78,21 +107,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         String currentLang = LocaleHelper.getSavedLanguage(this);
         languageBtn.setImageResource(currentLang.equals("en") ? R.drawable.img_spain : R.drawable.img_uk);
+
         languageBtn.setOnClickListener(v -> toggleLanguage());
         addItemBtn.setOnClickListener(this);
         infoBtn.setOnClickListener(this);
-        mCustomLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                IntentUtils.change(MainActivity.this, InfoItemActivity.class);
-            }
+
+        // Pass the ID to InfoItemActivity so it knows which item to show
+        mCustomLv.setOnItemClickListener((parent, view, position, id) -> {
+            Item selectedItem = (Item) parent.getItemAtPosition(position);
+            Intent intent = new Intent(MainActivity.this, InfoItemActivity.class);
+            intent.putExtra("ITEM_ID", selectedItem.getId());
+            startActivity(intent);
         });
     }
 
     private void toggleLanguage() {
         String currentLang = LocaleHelper.getSavedLanguage(this);
         String newLang = currentLang.equals("en") ? "es" : "en";
-
         LocaleHelper.saveLanguage(this, newLang);
 
         Intent intent = getIntent();

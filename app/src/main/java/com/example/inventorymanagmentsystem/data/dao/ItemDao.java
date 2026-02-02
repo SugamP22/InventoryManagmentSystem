@@ -22,7 +22,7 @@ public interface ItemDao {
     @Query("Select * from item where item_type= :type")
     List<Item> getSpecificItems(ItemType type);
 
-    @Query("Select * from item where quantity<= :num")
+    @Query("Select * from item where quantity<:num")
     List<Item> notices(int num);
 
     @Insert

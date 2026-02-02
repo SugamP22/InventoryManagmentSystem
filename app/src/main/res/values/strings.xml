@@ -26,6 +26,7 @@
     <string name="modify">Modify</string>
     <string name="remove">Remove</string>
     <string name="titleNotice">Notifications</string>
+    <string name="notification_subtitle">Items running low on stock</string>
     <string name="create">Create</string>
     <string name="date">Date:</string>
     <string name="description">description:</string>
