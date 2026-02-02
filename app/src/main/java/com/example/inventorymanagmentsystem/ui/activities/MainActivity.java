@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.inventorymanagmentsystem.R;
 import com.example.inventorymanagmentsystem.data.repository.ItemRepository;
+import com.example.inventorymanagmentsystem.data.repository.TransactionRepository;
 import com.example.inventorymanagmentsystem.models.Item;
 import com.example.inventorymanagmentsystem.ui.adapters.CategorySpinnerAdapter;
 import com.example.inventorymanagmentsystem.ui.adapters.CustomAdapterItems;
@@ -49,6 +50,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         // load default data if empty
         itemRepository.seedDataBase();
+
+        TransactionRepository transactionRepository = new TransactionRepository(this);
+        transactionRepository.seedTransactionData(itemRepository.getAllItems());
 
         // Load initial data from Database
         loadDataFromDatabase();
