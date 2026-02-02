@@ -17,9 +17,10 @@ public class ItemRepository {
         DatabaseHelper db = DatabaseHelper.getDB(context);
         this.itemDao = db.itemDao();
     }
-    // -- load default dat if empty -- 
-    public void seedDataBase(){
-        if(itemDao.getAllItems().isEmpty()){
+
+    // -- load default dat if empty --
+    public void seedDataBase() {
+        if (itemDao.getAllItems().isEmpty()) {
 
             // --- VEGETABLES ---
             itemDao.addItem(new Item("Carrots", ItemType.VEGETABLE, 15, "Fresh crunchy carrots"));
@@ -65,6 +66,10 @@ public class ItemRepository {
     // -- Method to retrieve a specific item from DB by type --
     public List<Item> getSpecificItems(ItemType type) {
         return itemDao.getSpecificItems(type);
+    }
+
+    public int returnIDItem(Item item) {
+        return (int) itemDao.returnID(item);
     }
 
     // -- Method to insert item to DB --
