@@ -31,6 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private AppCompatButton infoBtn;
 
     private AppCompatButton addItemBtn;
+
     private Integer[] images = {R.drawable.imavegetal, R.drawable.imgmeat, R.drawable.imgfish};
 
     private ArrayList<Item> itemList;
@@ -41,7 +42,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
 
         connectXML();
-        itemList = ItemRepository.getDefaultItems();
+        ItemRepository itemRepository=new ItemRepository(this);
+        itemList = new ArrayList<>(itemRepository.getDefaultItems());
 
         spinner.setAdapter(new CategorySpinnerAdapter(this));
         CustomAdapterItems adapterItems = new CustomAdapterItems(this, itemList, images);

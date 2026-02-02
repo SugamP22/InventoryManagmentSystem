@@ -3,10 +3,7 @@ package com.example.inventorymanagmentsystem.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
-import com.example.inventorymanagmentsystem.ui.activities.MainActivity;
-import com.example.inventorymanagmentsystem.ui.activities.NotificationsActivity;
 
 public class IntentUtils {
 //    changing the activity without finishing the previous one

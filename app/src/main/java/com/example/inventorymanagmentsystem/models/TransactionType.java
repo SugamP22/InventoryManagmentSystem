@@ -1,5 +1,5 @@
 package com.example.inventorymanagmentsystem.models;
 
-public enum Type {
-    VEGETABLE,MEAT,FISH;
+public enum TransactionType {
+    ENTRY,EXIT;
 }
