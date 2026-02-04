@@ -43,8 +43,9 @@ public class CustomAdapterNotifications extends ArrayAdapter<Item> {
         }
         TextView tv=view.findViewById(R.id.customTV);
         Item currentItem=listItem.get(position);
-        tv.setText(String.format("Article: %s, Type: %s, Quantity: %d",
-                currentItem.getName(), currentItem.getType(), currentItem.getCurrentQuantity()));
+        String text = context.getString(R.string.notification_item_format,
+                currentItem.getName(), currentItem.getType(), currentItem.getCurrentQuantity());
+        tv.setText(text);
         return view;
     }
 }

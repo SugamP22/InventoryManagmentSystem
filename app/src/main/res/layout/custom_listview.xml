@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="20dp"
-            android:text="item name"
+            android:text="@string/name"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="20dp"
-            android:text="Item type"
+            android:text="@string/type"
             android:textColor="#999595"
             android:textSize="15sp"
             android:textStyle="normal" />

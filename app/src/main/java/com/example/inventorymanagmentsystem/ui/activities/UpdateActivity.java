@@ -12,9 +12,11 @@ import com.example.inventorymanagmentsystem.data.repository.ItemRepository;
 import com.example.inventorymanagmentsystem.data.repository.TransactionRepository;
 import com.example.inventorymanagmentsystem.models.Item;
 import com.example.inventorymanagmentsystem.models.TransactionType;
+import com.example.inventorymanagmentsystem.utils.ConversionUtils;
+import com.example.inventorymanagmentsystem.utils.IntentUtils;
+import com.example.inventorymanagmentsystem.utils.ValidationUtils;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 /**
@@ -49,52 +51,62 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
             finish();
         }
         connectXML();
-        getCurrentItemByID();
+        getCurrentItemByIdAndFillData();
         setListeners();
-        verifyDataAndGetItem();
-        updateIfItemNotNull();
-
     }
 
-    private void getCurrentItemByID() {
-        Item item = itemRepository.getItem(currentItemID);
+    /**
+     * In this method we try to get the item and then check the data through before filling it inside the TextInputET
+     */
+    private void getCurrentItemByIdAndFillData() {
+        itemToUpdate = itemRepository.getItem(currentItemID);
 
-        if (item != null) {
+        if (itemToUpdate != null) {
             //Wrap integers in String.valueOf()
-            id.setText(String.valueOf(item.getId()));
-            name.setText(item.getName());
-            category.setText(item.getType().toString());
-            description.setText(item.getDescription());
-            totalQuantity.setText(String.valueOf(item.getCurrentQuantity()));
+            id.setText(String.valueOf(itemToUpdate.getId()));
+            name.setText(itemToUpdate.getName());
+            category.setText(itemToUpdate.getType().toString());
+            description.setText(itemToUpdate.getDescription());
+            totalQuantity.setText(String.valueOf(itemToUpdate.getCurrentQuantity()));
 
             // Fetch Dates
             LocalDate dateEntry = transactionRepository.getDateByItemTypeAndID(TransactionType.ENTRY, currentItemID);
             LocalDate dateExit = transactionRepository.getDateByItemTypeAndID(TransactionType.EXIT, currentItemID);
 
             // NULL CHECK: Prevent crash if dates don't exist yet
-            entry.setText(dateEntry != null ? dateEntry.toString() : "N/A");
-            exit.setText(dateExit != null ? dateExit.toString() : "N/A");
+            entry.setText(dateEntry != null ? dateEntry.toString() : getString(R.string.label_not_available));
+            exit.setText(dateExit != null ? dateExit.toString() : getString(R.string.label_not_available));
         }
     }
 
     /**
-     * Update the item if its there to do so
+     * Update the item if the current available data is valid
      */
-    private void updateIfItemNotNull() {
+    private void validateAndUpdate() {
+        if (ValidationUtils.isInputsValid(this, name, category, description)) {
+            try {
+                itemToUpdate.setType(ConversionUtils.parseType(category.getText().toString()));
+                itemToUpdate.setName(name.getText().toString());
+                itemToUpdate.setDescription(description.getText().toString());
+                itemRepository.updateItem(itemToUpdate);
+                Toast.makeText(this, getString(R.string.updateSuccesfully), Toast.LENGTH_LONG).show();
+                backToInfoView();
+            } catch (IllegalArgumentException e) {
+                // Catch Enum errors (e.g., user typed "Pizza" instead of "Meat")
+                category.setError(getString(R.string.validItemType));
+                Toast.makeText(this, getString(R.string.msg_invalid_item_type), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
     }
 
-    /**
-     * Verify the inputs and save the item in the insatnce
-     */
-
-    private void verifyDataAndGetItem() {
-    }
 
     /**
      * set listeners to the required views
      */
-
     private void setListeners() {
+        btnUpdate.setOnClickListener(this);
         btnBack.setOnClickListener(this);
 
     }
@@ -102,7 +114,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
     /**
      * connecting xml using R.id
      */
-
     private void connectXML() {
         btnBack = findViewById(R.id.btnBackUpdV);
         btnUpdate = findViewById(R.id.btnUpdate);
@@ -113,8 +124,6 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
         totalQuantity = findViewById(R.id.totalQuantityIt);
         entry = findViewById(R.id.entryDateIt);
         exit = findViewById(R.id.exitDateIt);
-        btnUpdate.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
     }
 
     /**
@@ -122,13 +131,20 @@ public class UpdateActivity extends AppCompatActivity implements View.OnClickLis
      *
      * @param v The view that was clicked.
      */
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == btnBack.getId()) {
-            finish();
-
+            backToInfoView();
+        } else if (id == btnUpdate.getId()) {
+            validateAndUpdate();
         }
+    }
+
+    /**
+     * To change the view back to info view
+     */
+    private void backToInfoView() {
+        IntentUtils.changeWithExtras(UpdateActivity.this, InfoItemActivity.class, "ITEM_ID", currentItemID);
     }
 }

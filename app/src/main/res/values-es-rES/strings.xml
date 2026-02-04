@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">InventoryManagmentSystem</string>
+    <string name="app_name">Sistema de gestión de inventario</string>
     <!--    Textos en español -->
-    <string name="tv_title">Tienda de alimentación</string>
+    <string name="tv_title">Inventario de tienda de alimentación</string>
     <string-array name="spinner_main">
         <item>Todos los artículos</item>
         <item>Productos cárnicos</item>
         <item>Productos de pescado</item>
         <item>Productos vegetales</item>
     </string-array>
-    <string name="btn_main">Avisos</string>
-    <string name="imgDscrip">Selecciona</string>
+    <string name="btn_main">Notificaciones</string>
+    <string name="imgDscrip">Seleccionar</string>
     <string name="home">Inicio</string>
     <string name="itemImg">Imagen de la categoría del artículo</string>
     <string name="id">ID:</string>
     <string name="name">Nombre:</string>
     <string name="type">Categoría:</string>
-    <string name="entry">Ultimo fecha entrada:</string>
-    <string name="exit">Ultimo salida:</string>
-    <string name="quantity">Cantidad Total:</string>
+    <string name="entry">Última fecha de entrada:</string>
+    <string name="exit">Última fecha de salida:</string>
+    <string name="quantity">Cantidad total:</string>
     <string name="add">Añadir</string>
     <string name="modify">Modificar</string>
     <string name="remove">Eliminar</string>
-    <string name="titleNotice">Notificaciónes</string>
+    <string name="titleNotice">Notificaciones</string>
     <string name="notification_subtitle">Artículos con stock bajo</string>
     <string name="create">Crear</string>
-    <string name="updating">Modificar Articulo</string>
-    <string name="update">Aplicar</string>
-    <string name="adding">Añadir Articulo</string>
+    <string name="updating">Modificar artículo</string>
+    <string name="update">Actualizar</string>
+    <string name="adding">Añadir artículo</string>
     <string name="date">Fecha:</string>
-    <string name="description">descripción:</string>
-    <string name="addMore">Añadir más(kg):</string>
-    <string name="newArticle">Nuevo articlulo</string>
-    <string name="optionAddRemove">Quitar / Añadir :</string>
-    <string name="back">Atás</string>
-    <string name="EmptyerrorMsg">Error: El valor debe ser mayor que 0</string>
-    <string name="quantityAddSucces">Cantidad añadido con exitó</string>
-    <string name="quantityRemoveSucces">Cantidad quitado con exitóy</string>
-    <string name="quatityModifyError">Error: No pudo modificar la cantidad</string>
-    <string name="errorIntentLoad">Error: No pudo cargar la vista</string>
+    <string name="description">Descripción:</string>
+    <string name="addMore">Añadir más (kg):</string>
+    <string name="newArticle">Nuevo artículo</string>
+    <string name="optionAddRemove">Quitar / Añadir:</string>
+    <string name="back">Atrás</string>
+    <string name="EmptyerrorMsg">Error: El valor debe ser mayor que cero</string>
+    <string name="quantityAddSucces">Cantidad añadida con éxito</string>
+    <string name="quantityRemoveSucces">Cantidad retirada con éxito</string>
+    <string name="quatityModifyError">Error: No se pudo modificar la cantidad</string>
+    <string name="errorIntentLoad">Error: No se pudo cargar la vista</string>
+    <string name="requiredErrorMsg">Error: Este campo es obligatorio</string>
+    <string name="validErrorMSG">Introduce un número válido</string>
+    <string name="validItemType">Debe ser: VEGETABLE, MEAT o FISH</string>
+    <string name="updateSuccesfully">Artículo modificado con éxito</string>
 
-
-
-
-
-
-
-
-
-
+    <!-- Mensajes adicionales -->
+    <string name="msg_item_created_success">Artículo creado con éxito</string>
+    <string name="msg_invalid_quantity">Cantidad no válida</string>
+    <string name="msg_invalid_item_type">Tipo de artículo no válido</string>
+    <string name="msg_invalid_date">Fecha no válida</string>
+    <string name="hint_date_format">Utiliza el formato yyyy-MM-dd</string>
+    <string name="label_not_available">N/D</string>
+    <string name="error_item_not_found">Error: Artículo seleccionado no encontrado</string>
+    <string name="notification_item_format">Artículo: %1$s, Tipo: %2$s, Cantidad: %3$d</string>
 
 
 </resources>

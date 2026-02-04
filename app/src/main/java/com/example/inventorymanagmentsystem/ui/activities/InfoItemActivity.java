@@ -64,15 +64,16 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
         img.setImageResource(ImageUtils.getImageResource(item.getType()));
 
         // Logic to handle null or empty values for display
-        String strId = item.getId() <= 0 ? "N/A" : String.valueOf(item.getId());
-        String strName = (item.getName() == null || item.getName().isEmpty()) ? "N/A" : item.getName();
-        String strType = (item.getType() == null) ? "N/A" : item.getType().toString();
-        String strDescription = (item.getDescription() == null || item.getDescription().isEmpty()) ? "N/A" : item.getDescription();
+        String notAvailable = getString(R.string.label_not_available);
+        String strId = item.getId() <= 0 ? notAvailable : String.valueOf(item.getId());
+        String strName = (item.getName() == null || item.getName().isEmpty()) ? notAvailable : item.getName();
+        String strType = (item.getType() == null) ? notAvailable : item.getType().toString();
+        String strDescription = (item.getDescription() == null || item.getDescription().isEmpty()) ? notAvailable : item.getDescription();
         String strQuantity = String.valueOf(item.getCurrentQuantity());
 
         // Handle dates: if null, show "N/A"
-        String strEntry = (entry == null) ? "N/A" : entry.toString();
-        String strExit = (exit == null) ? "N/A" : exit.toString();
+        String strEntry = (entry == null) ? notAvailable : entry.toString();
+        String strExit = (exit == null) ? notAvailable : exit.toString();
 
         // Setting texts to UI
         id.setText(strId);
@@ -101,7 +102,7 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
     private void getCurrentItemID() {
         idCurrentItem = getIntent().getIntExtra("ITEM_ID", -1);
         if (idCurrentItem == -1) {
-            Toast.makeText(this, "Error: Select item not found", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.error_item_not_found), Toast.LENGTH_LONG).show();
             finish();
         }
     }

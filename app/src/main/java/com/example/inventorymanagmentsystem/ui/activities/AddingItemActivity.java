@@ -37,7 +37,7 @@ public class AddingItemActivity extends AppCompatActivity {
             ItemRepository itemRepository = new ItemRepository(this);
             TransactionRepository transactionRepository = new TransactionRepository(this);
             // 1. Basic empty check
-            if (ValidationUtils.isInputsValid(editTextName, editTextType, editTextDescription, editTextQuantity)) {
+            if (ValidationUtils.isInputsValid(this,editTextName, editTextType, editTextDescription, editTextQuantity)) {
 
                 try {
                     // 2. Try to parse technical data
@@ -57,20 +57,20 @@ public class AddingItemActivity extends AppCompatActivity {
                     transaction.setItem_id(id_item);
                     transaction.setType(TransactionType.ENTRY);
                     transactionRepository.insertTransaction(transaction);
-                    Toast.makeText(this, "Item Created Successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.msg_item_created_success), Toast.LENGTH_SHORT).show();
                     CleaningUtils.clearData(editTextName, editTextType, editTextDescription, editTextQuantity,editTextDate);
                 } catch (NumberFormatException e) {
                     // Catch quantity errors
-                    editTextQuantity.setError("Please enter a valid number");
-                    Toast.makeText(this, "Invalid Quantity!", Toast.LENGTH_SHORT).show();
+                    editTextQuantity.setError(getString(R.string.validErrorMSG));
+                    Toast.makeText(this, getString(R.string.msg_invalid_quantity), Toast.LENGTH_SHORT).show();
                 } catch (IllegalArgumentException e) {
                     // Catch Enum errors (e.g., user typed "Pizza" instead of "Meat")
-                    editTextType.setError("Must be: VEGETABLE, MEAT, or FISH");
-                    Toast.makeText(this, "Invalid Item Type!", Toast.LENGTH_SHORT).show();
+                    editTextType.setError(getString(R.string.validItemType));
+                    Toast.makeText(this, getString(R.string.msg_invalid_item_type), Toast.LENGTH_SHORT).show();
                 } catch (DateTimeParseException e) {
                     //catch error related to date format
-                    editTextDate.setError("Please use format yyyy-MM-dd");
-                    Toast.makeText(this, "Invalid Date!", Toast.LENGTH_SHORT).show();
+                    editTextDate.setError(getString(R.string.hint_date_format));
+                    Toast.makeText(this, getString(R.string.msg_invalid_date), Toast.LENGTH_SHORT).show();
                 }
             }
         });

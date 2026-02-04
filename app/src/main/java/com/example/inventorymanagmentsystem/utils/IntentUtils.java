@@ -23,10 +23,11 @@ public class IntentUtils {
         currentActivity.finish(); // This closes the current activity
     }
 
-    public static void changeWithExtras(Context infoItemActivity, Class<?> updateActivityClass, String key, int value) {
+    public static void changeWithExtras(Activity infoItemActivity, Class<?> updateActivityClass, String key, int value) {
         Intent intent=new Intent(infoItemActivity,updateActivityClass);
         intent.putExtra(key,value);
         infoItemActivity.startActivity(intent);
+        infoItemActivity.finish();
     }
 }
 
