@@ -32,6 +32,11 @@
     <string name="description">description:</string>
     <string name="newArticle">New Item</string>
     <string name="optionAddRemove">Remove / Add :</string>
+    <string name="EmptyerrorMsg">Error: Value must be greater then zero</string>
+    <string name="quantityAddSucces">Quantity added successfully</string>
+    <string name="quantityRemoveSucces">Quantity removed successfully</string>
+    <string name="quatityModifyError">Error: Quantity was not modified</string>
+    <string name="errorIntentLoad">Error: Could not load the view </string>
 
     <string name="home">Home</string>
     <string name="back">Back</string>

@@ -25,6 +25,7 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,6 +44,7 @@
             android:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/eliminate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -197,6 +199,8 @@
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:clickable="false"
+                        android:focusable="false"
                         android:hint="0"
                         android:inputType="number" />
 
@@ -213,7 +217,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last Entry Date:"
+                    android:text="@string/entry"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -228,7 +232,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last Exit Date:"
+                    android:text="@string/exit"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

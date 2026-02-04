@@ -34,6 +34,14 @@
     <string name="newArticle">Nuevo articlulo</string>
     <string name="optionAddRemove">Quitar / Añadir :</string>
     <string name="back">Atás</string>
+    <string name="EmptyerrorMsg">Error: El valor debe ser mayor que 0</string>
+    <string name="quantityAddSucces">Cantidad añadido con exitó</string>
+    <string name="quantityRemoveSucces">Cantidad quitado con exitóy</string>
+    <string name="quatityModifyError">Error: No pudo modificar la cantidad</string>
+    <string name="errorIntentLoad">Error: No pudo cargar la vista</string>
+
+
+
 
 
 

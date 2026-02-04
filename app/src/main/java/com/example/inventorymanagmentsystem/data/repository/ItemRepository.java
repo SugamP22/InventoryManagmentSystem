@@ -58,6 +58,15 @@ public class ItemRepository {
         return itemDao.getAllItems();
     }
 
+    // -- To update quantity in the DB
+    public int addQuantity(int quantity,int id) {
+        return itemDao.addQuantity(quantity,id);
+    }
+
+    public int removeQuantity(int quantity,int id) {
+        return itemDao.removeQuantity(quantity,id);
+    }
+
     // -- Method to retrieve a specific item from DB by id --
     public Item getItem(int num) {
         return itemDao.getItem(num);
