@@ -11,9 +11,9 @@
         android:id="@+id/home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/shape_blue_btn"
         android:text="@string/home"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_blue_btn" />
+        android:textColor="@color/white" />
 
     <!-- Bottom buttons -->
     <LinearLayout
@@ -21,42 +21,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_marginVertical="15dp">
+        android:layout_marginVertical="15dp"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#708d81"
             android:text="@string/add"
-            android:textColor="@color/white"
-            android:background="#708d81" />
+            android:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/modify"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="8dp"
+            android:layout_weight="1"
+            android:background="#3a7ca5"
             android:text="@string/modify"
-            android:textColor="@color/white"
-            android:background="#3a7ca5" />
+            android:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/eliminate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#ff595e"
             android:text="@string/remove"
-            android:textColor="@color/white"
-            android:background="#ff595e" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <!-- Scrollable content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/home"
         android:layout_above="@id/actionButtons"
+        android:layout_below="@id/home"
         android:fillViewport="true">
 
         <LinearLayout
@@ -75,140 +77,164 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/shape_decor_lv"
-                android:layout_marginTop="20dp">
+                android:orientation="vertical"
+                android:padding="12dp">
 
                 <!-- ID -->
                 <TextView
+                    android:id="@+id/infoId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/id"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/infoidtv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:textSize="18sp"
-                    android:textStyle="italic"
-                    android:paddingBottom="10dp" />
+                    android:textStyle="italic" />
 
                 <!-- Name -->
                 <TextView
+                    android:id="@+id/infoName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/name"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/infonombretv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:textSize="18sp"
-                    android:textStyle="italic"
-                    android:paddingBottom="10dp" />
+                    android:textStyle="italic" />
 
                 <!-- Type -->
                 <TextView
+                    android:id="@+id/infoCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/type"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/infotypetv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:textSize="18sp"
-                    android:textStyle="italic"
-                    android:paddingBottom="10dp" />
+                    android:textStyle="italic" />
+                <!--  About the product -->
 
+                <TextView
+                    android:id="@+id/Description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/infoDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:textColor="#023e7d"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
                 <!-- Quantity -->
                 <TextView
+                    android:id="@+id/infoQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/quantity"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/infoCantidadtv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
+                    android:paddingBottom="15dp"
                     android:textColor="#023e7d"
-                    android:paddingBottom="15dp" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
                 <!-- Add / Remove -->
                 <TextView
+                    android:id="@+id/infoRemove"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/optionAddRemove"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:paddingBottom="15dp">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnMinus"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:background="#ff595e"
                         android:text="-"
-                        android:textColor="@color/white"
-                        android:background="#ff595e" />
+                        android:textColor="@color/white" />
 
                     <EditText
                         android:id="@+id/etAddRemove"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginHorizontal="10dp"
-                        android:hint="0"
+                        android:layout_weight="1"
                         android:gravity="center"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:hint="0"
                         android:inputType="number" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnPlus"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
+                        android:background="#708d81"
                         android:text="+"
-                        android:textColor="@color/white"
-                        android:background="#708d81" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
                 <!-- Dates -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last Entry Date:"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:text="@string/entry"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/infoDateEntry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:textSize="18sp"
-                    android:textStyle="italic"
-                    android:paddingBottom="10dp" />
+                    android:textStyle="italic" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last Exit Date:"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
+                    android:text="@string/exit"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/infodateExit"

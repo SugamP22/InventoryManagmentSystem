@@ -2,37 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5e6472"
+    android:background="@color/notification_bg"
     android:orientation="vertical"
-    android:padding="15dp">
-    <!-- title for view  -->
+    android:padding="16dp">
+
+    <!-- Title -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/shape_title"
         android:gravity="center_horizontal"
-        android:padding="10dp"
+        android:paddingVertical="14dp"
+        android:paddingHorizontal="16dp"
         android:text="@string/titleNotice"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
-    <!--   notification list  -->
+
+    <!-- Subtitle hint -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:paddingHorizontal="4dp"
+        android:text="@string/notification_subtitle"
+        android:textColor="#B0BEC5"
+        android:textSize="13sp" />
+
+    <!-- Notification list -->
     <ListView
+        android:id="@+id/notificationCustomLv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/shape_decor_lv"/>
-    <!-- back to home button -->
+        android:background="@drawable/shape_notification_list_bg"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp" />
+
+    <!-- Home button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnHomeNotV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/shape_blue_btn"
+        android:minWidth="140dp"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="24dp"
         android:text="@string/home"
         android:textColor="@color/white"
-        android:textSize="20sp" />
-
+        android:textSize="16sp"
+        android:textAllCaps="false" />
 </LinearLayout>

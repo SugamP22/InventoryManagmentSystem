@@ -1,7 +1,7 @@
 package com.example.inventorymanagmentsystem.utils;
 
 import com.example.inventorymanagmentsystem.models.Item;
-import com.example.inventorymanagmentsystem.models.Type;
+import com.example.inventorymanagmentsystem.models.ItemType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +17,11 @@ public class ItemFilter {
             filteredList.addAll(items);
         } else {
             for (Item item : items) {
-                if (spinnerPosition == 1 && item.getType() == Type.MEAT) {
+                if (spinnerPosition == 1 && item.getType() == ItemType.MEAT) {
                     filteredList.add(item);
-                } else if (spinnerPosition == 2 && item.getType() == Type.FISH) {
+                } else if (spinnerPosition == 2 && item.getType() == ItemType.FISH) {
                     filteredList.add(item);
-                } else if (spinnerPosition == 3 && item.getType() == Type.VEGETABLE) {
+                } else if (spinnerPosition == 3 && item.getType() == ItemType.VEGETABLE) {
                     filteredList.add(item);
                 }
             }

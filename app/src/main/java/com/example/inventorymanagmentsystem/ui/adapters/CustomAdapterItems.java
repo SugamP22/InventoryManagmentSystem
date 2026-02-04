@@ -1,6 +1,5 @@
 package com.example.inventorymanagmentsystem.ui.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.example.inventorymanagmentsystem.R;
 import com.example.inventorymanagmentsystem.models.Item;
-import com.example.inventorymanagmentsystem.models.Type;
+import com.example.inventorymanagmentsystem.models.ItemType;
 
 import java.util.ArrayList;
 
@@ -55,14 +54,14 @@ public class CustomAdapterItems extends ArrayAdapter<Item> {
         TextView num=view.findViewById(R.id.itemid);
 
 
-        imageText.setText(currentItem.getNombre());
+        imageText.setText(currentItem.getName());
         imageType.setText(currentItem.getType().toString());
         num.setText(currentItem.getId()+".");
 
         // We use 0-based indices: 0=vegetal, 1=meat, 2=fish
-        if (currentItem.getType().equals(Type.VEGETABLE)) {
+        if (currentItem.getType().equals(ItemType.VEGETABLE)) {
             imgView.setImageResource(images_resources[0]);
-        } else if (currentItem.getType().equals(Type.MEAT)) {
+        } else if (currentItem.getType().equals(ItemType.MEAT)) {
             imgView.setImageResource(images_resources[1]);
         } else {
             imgView.setImageResource(images_resources[2]);
