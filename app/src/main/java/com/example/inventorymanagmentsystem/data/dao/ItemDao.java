@@ -10,7 +10,10 @@ import com.example.inventorymanagmentsystem.models.ItemType;
 
 import java.util.List;
 
-
+/**
+ * DAO for the item table. I use it to load all items, get one by id, filter by type, get low-stock
+ * items, add/update items and adjust quantity (add/remove).
+ */
 @Dao
 public interface ItemDao {
     @Query("Select * from item")

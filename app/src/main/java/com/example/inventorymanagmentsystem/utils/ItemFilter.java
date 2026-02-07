@@ -6,11 +6,12 @@ import com.example.inventorymanagmentsystem.models.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * I use this to filter the main list by category. Spinner position 0 = all, 1 = meat, 2 = fish, 3 = vegetable
+ * (same order as spinner_main in strings.xml).
+ */
 public class ItemFilter {
 
-    /**
-     * Filters items by spinner position. 0 = all, 1 = meat, 2 = fish, 3 = vegetable.
-     */
     public static ArrayList<Item> filter(List<Item> items, int spinnerPosition) {
         ArrayList<Item> filteredList = new ArrayList<>();
         if (spinnerPosition == 0) {

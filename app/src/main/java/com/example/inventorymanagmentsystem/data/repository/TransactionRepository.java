@@ -11,15 +11,19 @@ import com.example.inventorymanagmentsystem.models.TransactionType;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * I use this class to access the transaction table via TransactionDao. I insert new transactions
+ * when the user adds/removes stock and I read the latest entry/exit date per item for the detail screen.
+ */
 public class TransactionRepository {
     private final TransactionDao transactionDao;
 
-    //class to guid our DB helper class towards or DAO to retrieve data
     public TransactionRepository(Context context) {
         DatabaseHelper db = DatabaseHelper.getDB(context);
         this.transactionDao = db.transactionDao();
     }
 
+    /** I use this to show the last entry or exit date for an item on the detail screen. */
     public LocalDate getDateByItemTypeAndID(TransactionType type, int itemId) {
         return transactionDao.getDateByItemId(type, itemId);
     }
@@ -28,10 +32,7 @@ public class TransactionRepository {
         transactionDao.insertTransaction(transaction);
     }
 
-    /**
-     * Seeds the transaction table with sample data linked to existing items.
-     * Only runs when the transaction table is empty.
-     */
+    /** I seed sample transactions only when the transaction table is empty, so the detail screen has dates to show. */
     public void seedTransactionData(List<Item> items) {
         if (items == null || items.isEmpty()) return;
         if (!transactionDao.getAllTransaction().isEmpty()) return;

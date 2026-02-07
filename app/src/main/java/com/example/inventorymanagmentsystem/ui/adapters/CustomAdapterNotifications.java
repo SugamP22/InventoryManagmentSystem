@@ -15,6 +15,10 @@ import com.example.inventorymanagmentsystem.models.Item;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for the notifications list: I show each low-stock item as a line with name, type and quantity.
+ * The text comes from strings (notification_item_format) so it's localized.
+ */
 public class CustomAdapterNotifications extends ArrayAdapter<Item> {
     private final Context context;
     private ArrayList<Item> listItem;
@@ -25,8 +29,8 @@ public class CustomAdapterNotifications extends ArrayAdapter<Item> {
         this.listItem = listItem;
     }
 
+    /** I update the list when the background thread fetches new low-stock items. */
     public void updateList(ArrayList<Item> list) {
-        // Keep listItem in sync with the data shown by the adapter (getView uses listItem.get(position))
         this.listItem = list != null ? list : new ArrayList<>();
         clear();
         addAll(this.listItem);
@@ -38,11 +42,11 @@ public class CustomAdapterNotifications extends ArrayAdapter<Item> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            LayoutInflater inflater=LayoutInflater.from(context);
-            view=inflater.inflate(R.layout.custom_noticeslv,parent,false);
+            LayoutInflater inflater = LayoutInflater.from(context);
+            view = inflater.inflate(R.layout.custom_noticeslv, parent, false);
         }
-        TextView tv=view.findViewById(R.id.customTV);
-        Item currentItem=listItem.get(position);
+        TextView tv = view.findViewById(R.id.customTV);
+        Item currentItem = listItem.get(position);
         String text = context.getString(R.string.notification_item_format,
                 currentItem.getName(), currentItem.getType(), currentItem.getCurrentQuantity());
         tv.setText(text);

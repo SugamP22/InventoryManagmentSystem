@@ -17,13 +17,15 @@ import com.example.inventorymanagmentsystem.models.ItemType;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for the main screen list: I show each item's name, type and a category image (vegetable/meat/fish).
+ * I use updateList when the user changes the filter so the list reflects the current selection.
+ */
 public class CustomAdapterItems extends ArrayAdapter<Item> {
 
     private Context context;
     private ArrayList<Item> itemList;
-
     private Integer[] images_resources;
-
 
     public CustomAdapterItems(Context context, ArrayList<Item> itemList, Integer[] images_resources) {
         super(context, R.layout.custom_listview, new ArrayList<>(itemList));
@@ -32,6 +34,7 @@ public class CustomAdapterItems extends ArrayAdapter<Item> {
         this.images_resources = images_resources;
     }
 
+    /** I replace the displayed list when the user changes the category filter on the main screen. */
     public void updateList(ArrayList<Item> newList) {
         this.itemList = newList;
         clear();
@@ -50,15 +53,14 @@ public class CustomAdapterItems extends ArrayAdapter<Item> {
         Item currentItem = itemList.get(position);
         TextView imageText = view.findViewById(R.id.textView);
         ImageView imgView = view.findViewById(R.id.imgview);
-        TextView imageType=view.findViewById(R.id.typetv);
-        TextView num=view.findViewById(R.id.itemid);
-
+        TextView imageType = view.findViewById(R.id.typetv);
+        TextView num = view.findViewById(R.id.itemid);
 
         imageText.setText(currentItem.getName());
         imageType.setText(currentItem.getType().toString());
-        num.setText(currentItem.getId()+".");
+        num.setText(currentItem.getId() + ".");
 
-        // We use 0-based indices: 0=vegetal, 1=meat, 2=fish
+        // I pick the icon by type: same order as ItemType (VEGETABLE=0, MEAT=1, FISH=2)
         if (currentItem.getType().equals(ItemType.VEGETABLE)) {
             imgView.setImageResource(images_resources[0]);
         } else if (currentItem.getType().equals(ItemType.MEAT)) {

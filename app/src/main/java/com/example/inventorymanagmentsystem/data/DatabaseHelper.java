@@ -13,6 +13,10 @@ import com.example.inventorymanagmentsystem.models.Item;
 import com.example.inventorymanagmentsystem.models.Transaction;
 import com.example.inventorymanagmentsystem.utils.ConvertersUtil;
 
+/**
+ * Single Room database for the app. I hold the Item and Transaction tables here and use
+ * ConvertersUtil so we can store LocalDate and enums (ItemType, TransactionType) in the DB.
+ */
 @Database(entities = {Item.class, Transaction.class}, exportSchema = false, version = 1)
 @TypeConverters({ConvertersUtil.class})
 public abstract class DatabaseHelper extends RoomDatabase {

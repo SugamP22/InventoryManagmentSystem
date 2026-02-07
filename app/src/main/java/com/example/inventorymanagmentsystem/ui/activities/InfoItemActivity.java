@@ -21,6 +21,10 @@ import com.example.inventorymanagmentsystem.utils.IntentUtils;
 
 import java.time.LocalDate;
 
+/**
+ * Detail screen for one item. I show name, type, description, quantity, last entry/exit dates and
+ * let the user add/remove stock (which I record as transactions) or open the modify screen.
+ */
 public class InfoItemActivity extends AppCompatActivity implements View.OnClickListener {
 
     // UI Components
@@ -40,30 +44,23 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_information);
 
-        //Get the ID first so we know what to load
         getCurrentItemID();
 
-        //Initialize Repositories once (Better for memory)
         itemRepository = new ItemRepository(this);
         transactionRepository = new TransactionRepository(this);
 
-        //Setup UI
         connectXML();
         addListeners();
-
-        //Initial data load
         getCurrentItem();
     }
 
-    /**
-     * Updates the UI text fields with data from the Item and Transaction objects.
-     */
+    /** I fill all the text views and the image from the item and the latest entry/exit dates. */
     private void fillInfoItem(Item item, LocalDate entry, LocalDate exit) {
-        if (item == null) return; // Safety check
+        if (item == null) return;
 
         img.setImageResource(ImageUtils.getImageResource(item.getType()));
 
-        // Logic to handle null or empty values for display
+        // I show N/A for any null or empty value so the UI never breaks
         String notAvailable = getString(R.string.label_not_available);
         String strId = item.getId() <= 0 ? notAvailable : String.valueOf(item.getId());
         String strName = (item.getName() == null || item.getName().isEmpty()) ? notAvailable : item.getName();
@@ -71,11 +68,9 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
         String strDescription = (item.getDescription() == null || item.getDescription().isEmpty()) ? notAvailable : item.getDescription();
         String strQuantity = String.valueOf(item.getCurrentQuantity());
 
-        // Handle dates: if null, show "N/A"
         String strEntry = (entry == null) ? notAvailable : entry.toString();
         String strExit = (exit == null) ? notAvailable : exit.toString();
 
-        // Setting texts to UI
         id.setText(strId);
         name.setText(strName);
         type.setText(strType);
@@ -85,20 +80,15 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
         quantity.setText(strQuantity);
     }
 
-    /**
-     * Fetches the latest data from the database and updates the screen.
-     */
+    /** I load the item and its last entry/exit dates from the DB and refresh the UI. */
     private void getCurrentItem() {
-        // Fetch the latest entry/exit dates for this specific item
         LocalDate entry = transactionRepository.getDateByItemTypeAndID(TransactionType.ENTRY, idCurrentItem);
         LocalDate exit = transactionRepository.getDateByItemTypeAndID(TransactionType.EXIT, idCurrentItem);
-
-        // Get the item details
         Item currentItem = itemRepository.getItem(idCurrentItem);
-
         fillInfoItem(currentItem, entry, exit);
     }
 
+    /** I read ITEM_ID from the intent; if missing I show an error and finish. */
     private void getCurrentItemID() {
         idCurrentItem = getIntent().getIntExtra("ITEM_ID", -1);
         if (idCurrentItem == -1) {
@@ -141,7 +131,6 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
         if (clickedId == btnHome.getId()) {
             finish();
         } else if (clickedId == btnModify.getId()) {
-            // to Open Update activity providing it with id
             IntentUtils.changeWithExtras(InfoItemActivity.this, UpdateActivity.class, "ITEM_ID", idCurrentItem);
         } else if (clickedId == btnPlus.getId()) {
             num++;
@@ -150,17 +139,13 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
             if (num > 0) num--;
             etAddRemove.setText(String.valueOf(num));
         } else if (clickedId == btnRemove.getId()) {
-            handleStockUpdate(false); // False for EXIT/Remove
+            handleStockUpdate(false);
         } else if (clickedId == btnAdd.getId()) {
-            handleStockUpdate(true); // True for ENTRY/Add
+            handleStockUpdate(true);
         }
     }
 
-    /**
-     * Logic for adding/removing stock and recording the transaction.
-     *
-     * @param isAdding true if adding stock, false if removing.
-     */
+    /** I add or remove the amount entered, update the DB, and record a transaction. If remove fails (not enough stock) I show an error. */
     private void handleStockUpdate(boolean isAdding) {
         String input = etAddRemove.getText().toString().trim();
         if (input.isEmpty()) return;
@@ -179,32 +164,25 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
                 type = TransactionType.EXIT;
             }
 
-            // result > 0 means the database actually updated a row
             if (result > 0) {
                 String msg = isAdding ? getString(R.string.quantityAddSucces) : getString(R.string.quantityRemoveSucces);
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-
-                // Record the history in Transaction table
                 Transaction t = new Transaction(LocalDate.now(), type, idCurrentItem);
                 transactionRepository.insertTransaction(t);
-
             } else {
-                // This happens if removeQuantity fails due to "quantity >= amount" check in SQL
                 Toast.makeText(this, getString(R.string.quatityModifyError), Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, getString(R.string.EmptyerrorMsg), Toast.LENGTH_SHORT).show();
         }
-        refresh(); // Update the screen and reset counter
+        refresh();
     }
 
-    /**
-     * Resets the screen data and input fields after a successful transaction.
-     */
+    /** I reload the item from DB, reset the counter and clear the add/remove input. */
     private void refresh() {
-        getCurrentItem();     // Fetch fresh data from DB
-        num = 0;              // Reset local counter
-        etAddRemove.setText("0"); // Reset input field
+        getCurrentItem();
+        num = 0;
+        etAddRemove.setText("0");
     }
 
 }

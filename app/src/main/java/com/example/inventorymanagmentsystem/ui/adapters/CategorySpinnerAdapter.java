@@ -12,6 +12,10 @@ import androidx.annotation.Nullable;
 
 import com.example.inventorymanagmentsystem.R;
 
+/**
+ * Adapter for the main screen category filter spinner. I use spinner_main (All / Meat / Fish / Vegetable)
+ * and I show the "All" option in gray so it's clear it's the default filter.
+ */
 public class CategorySpinnerAdapter extends ArrayAdapter<String> {
 
     public CategorySpinnerAdapter(Context context) {

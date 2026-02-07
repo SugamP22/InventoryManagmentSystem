@@ -54,19 +54,20 @@
                     android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Type -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
+            <!-- Type: spinner so user picks VEGETABLE, MEAT or FISH from dropdown -->
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:hint="@string/type">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/type"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="14sp" />
+            <Spinner
+                android:id="@+id/spinnerType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:minHeight="48dp" />
 
             <!-- Description -->
             <com.google.android.material.textfield.TextInputLayout

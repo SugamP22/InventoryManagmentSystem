@@ -4,12 +4,15 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-//class that refers to transaction entity
+
 import java.time.LocalDate;
 
-@Entity(tableName = "item_transaction")//connecting with the table
+/**
+ * Model for a stock movement (entry or exit). I store these in the "item_transaction" table so we
+ * can show last entry/exit dates per item and keep a simple history.
+ */
+@Entity(tableName = "item_transaction")
 public class Transaction {
-    //referring to the respecting column in the table!!
     @PrimaryKey(autoGenerate = true)
     private int id;
     @ColumnInfo(name = "transaction_type")//
@@ -20,10 +23,11 @@ public class Transaction {
     @ColumnInfo(name = "item_id")
     private int item_id;
 
-    // I keep an empty constructor so Room can create this entity without any problem
+    /** I keep an empty constructor so Room can create this entity when reading from the DB. */
     public Transaction() {
     }
 
+    /** I use this when I record a new transaction from the UI (id is auto-generated). */
     @Ignore
     public Transaction(LocalDate date, TransactionType type, int id_item) {
         this.date = date;

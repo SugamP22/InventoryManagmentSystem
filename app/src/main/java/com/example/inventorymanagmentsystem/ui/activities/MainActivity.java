@@ -24,6 +24,10 @@ import com.example.inventorymanagmentsystem.utils.LocaleHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Main screen: I show the list of inventory items with a category filter spinner. User can tap an
+ * item to see details, open Add Item, or open Notifications. I also handle language toggle here.
+ */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private ListView mCustomLv;
@@ -33,9 +37,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private AppCompatButton infoBtn;
     private AppCompatButton addItemBtn;
 
+    /** I use these drawables for vegetable, meat and fish in the list (same order as ItemType). */
     private final Integer[] images = {R.drawable.imavegetal, R.drawable.imgmeat, R.drawable.imgfish};
 
-    // We keep this list to handle filtering logic
     private ArrayList<Item> itemList;
     private ItemRepository itemRepository;
 
@@ -44,29 +48,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //  Initialize UI and Repository
         connectXML();
         itemRepository = new ItemRepository(this);
-
-        // load default data if empty
         itemRepository.seedDataBase();
 
         TransactionRepository transactionRepository = new TransactionRepository(this);
         transactionRepository.seedTransactionData(itemRepository.getAllItems());
 
-        // Load initial data from Database
         loadDataFromDatabase();
 
-        //  Set up Spinner and Adapter
         spinner.setAdapter(new CategorySpinnerAdapter(this));
         CustomAdapterItems adapterItems = new CustomAdapterItems(this, itemList, images);
         mCustomLv.setAdapter(adapterItems);
 
-        // 5. Filter logic
+        // When the user changes the filter I update the list with only the selected category (or all)
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Filter the current itemList based on category
                 ArrayList<Item> filteredList = ItemFilter.filter(itemList, position);
                 CustomAdapterItems adapter = (CustomAdapterItems) mCustomLv.getAdapter();
                 if (adapter != null) {
@@ -80,9 +78,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
-    /**
-     * Helper method to pull data from Room and update our local ArrayList
-     */
+    /** I reload items from the DB and refresh the list (e.g. when we come back from Add or Detail). */
     private void loadDataFromDatabase() {
         List<Item> dbItems = itemRepository.getAllItems();
         itemList = new ArrayList<>(dbItems);
@@ -91,11 +87,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh data whenever we return to this screen (e.g., after adding an item)
         loadDataFromDatabase();
         CustomAdapterItems adapter = (CustomAdapterItems) mCustomLv.getAdapter();
         if (adapter != null) {
-            // Reset spinner to "All" (position 0) or just refresh current view
             adapter.updateList(itemList);
             spinner.setSelection(0);
         }
@@ -116,7 +110,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         addItemBtn.setOnClickListener(this);
         infoBtn.setOnClickListener(this);
 
-        // Pass the ID to InfoItemActivity so it knows which item to show
+        /** I pass ITEM_ID so the detail screen knows which item to load. */
         mCustomLv.setOnItemClickListener((parent, view, position, id) -> {
             Item selectedItem = (Item) parent.getItemAtPosition(position);
             Intent intent = new Intent(MainActivity.this, InfoItemActivity.class);
@@ -125,6 +119,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
     }
 
+    /** I switch between en and es, save it, then restart this activity so strings reload. */
     private void toggleLanguage() {
         String currentLang = LocaleHelper.getSavedLanguage(this);
         String newLang = currentLang.equals("en") ? "es" : "en";

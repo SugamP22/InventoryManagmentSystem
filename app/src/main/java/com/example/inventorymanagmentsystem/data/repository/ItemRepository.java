@@ -9,16 +9,19 @@ import com.example.inventorymanagmentsystem.models.ItemType;
 
 import java.util.List;
 
+/**
+ * I use this class to talk to the item table through ItemDao. It gives me one place to get items,
+ * add/update them, change quantity and load sample data when the DB is empty.
+ */
 public class ItemRepository {
     private final ItemDao itemDao;
 
-    //class to guid our DB helper class towards or DAO to retrieve data
     public ItemRepository(Context context) {
         DatabaseHelper db = DatabaseHelper.getDB(context);
         this.itemDao = db.itemDao();
     }
 
-    // -- load default dat if empty --
+    /** I fill the item table with sample vegetables, meat and fish only when it's empty. */
     public void seedDataBase() {
         if (itemDao.getAllItems().isEmpty()) {
 
@@ -53,40 +56,38 @@ public class ItemRepository {
         }
     }
 
-    // -- Method to retrieve all items from DB --
     public List<Item> getAllItems() {
         return itemDao.getAllItems();
     }
 
-    // -- To update quantity in the DB
+    /** I call this when the user adds stock; returns rows updated so we know if it worked. */
     public int addQuantity(int quantity, int id) {
         return itemDao.addQuantity(quantity, id);
     }
 
+    /** I call this when the user removes stock; returns 0 if not enough quantity. */
     public int removeQuantity(int quantity, int id) {
         return itemDao.removeQuantity(quantity, id);
     }
 
-    // -- Method to retrieve a specific item from DB by id --
     public Item getItem(int num) {
         return itemDao.getItem(num);
     }
 
-    // -- Method to retrieve a specific item from DB by type --
     public List<Item> getSpecificItems(ItemType type) {
         return itemDao.getSpecificItems(type);
     }
 
+    /** I use this after inserting a new item so I can create the first transaction with the new id. */
     public int returnIDItem(Item item) {
         return (int) itemDao.returnID(item);
     }
 
-    // -- Method to insert item to DB --
     public void addItem(Item item) {
         itemDao.addItem(item);
     }
 
-    //-- Method to retrieve items using quantity --
+    /** I use this for the notifications screen: items with quantity below the given threshold. */
     public List<Item> getLowStockItems(int num) {
         return itemDao.notices(num);
     }

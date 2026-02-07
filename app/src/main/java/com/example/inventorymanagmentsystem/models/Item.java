@@ -5,7 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-// Class that refers to Entity item
+/**
+ * Model for a single inventory item. I use this as the Room entity for the "item" table so each row
+ * has id, name, category (ItemType), description and quantity.
+ */
 @Entity(tableName = "item")
 public class Item {
     @PrimaryKey(autoGenerate = true)

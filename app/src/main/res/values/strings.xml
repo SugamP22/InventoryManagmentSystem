@@ -9,6 +9,12 @@
         <item>Fish items</item>
         <item>Vegetable items</item>
     </string-array>
+    <!-- Options for Add/Modify item type spinner; order must match ItemType enum: VEGETABLE, MEAT, FISH -->
+    <string-array name="item_type_options">
+        <item>Vegetable</item>
+        <item>Meat</item>
+        <item>Fish</item>
+    </string-array>
     <string name="btn_main">Notifications</string>
     <string name="imgDscrip">Select</string>
     <string name="itemImg">Image for the item category</string>

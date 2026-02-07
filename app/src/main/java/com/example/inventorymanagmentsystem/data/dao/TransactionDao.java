@@ -10,6 +10,10 @@ import com.example.inventorymanagmentsystem.models.TransactionType;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * DAO for the item_transaction table. I use it to insert transactions and to get the latest
+ * entry/exit date per item so we can show them on the detail screen.
+ */
 @Dao
 public interface TransactionDao {
     @Query("Select date from item_transaction where item_id=:id AND transaction_type = :type ORDER BY date DESC LIMIT 1")

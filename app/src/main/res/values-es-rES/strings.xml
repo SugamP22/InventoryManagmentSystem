@@ -9,6 +9,12 @@
         <item>Productos de pescado</item>
         <item>Productos vegetales</item>
     </string-array>
+    <!-- Same order as item_type_options in values/strings.xml: VEGETABLE, MEAT, FISH -->
+    <string-array name="item_type_options">
+        <item>Vegetal</item>
+        <item>Carne</item>
+        <item>Pescado</item>
+    </string-array>
     <string name="btn_main">Notificaciones</string>
     <string name="imgDscrip">Seleccionar</string>
     <string name="home">Inicio</string>

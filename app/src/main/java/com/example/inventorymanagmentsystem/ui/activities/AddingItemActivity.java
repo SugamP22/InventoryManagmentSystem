@@ -1,7 +1,9 @@
 package com.example.inventorymanagmentsystem.ui.activities;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +23,14 @@ import com.example.inventorymanagmentsystem.utils.ValidationUtils;
 
 import java.time.format.DateTimeParseException;
 
+/**
+ * Screen where I add a new item to the inventory. User enters name, category (via spinner),
+ * description, quantity and date; on Create we validate, save the item and an initial ENTRY transaction.
+ */
 public class AddingItemActivity extends AppCompatActivity {
     private AppCompatButton btnHome, btnCreate;
-    private EditText editTextName, editTextType, editTextDescription, editTextQuantity, editTextDate;
+    private EditText editTextName, editTextDescription, editTextQuantity, editTextDate;
+    private Spinner spinnerType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +38,26 @@ public class AddingItemActivity extends AppCompatActivity {
         setContentView(R.layout.adding_item);
         connectXML();
 
+        // I set today's date as default so the user doesn't have to type it
         editTextDate.setText(ConversionUtils.getCurrentDate());
+
+        // Spinner options must match ItemType enum order: VEGETABLE, MEAT, FISH
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.item_type_options, android.R.layout.simple_spinner_item);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(typeAdapter);
 
         btnCreate.setOnClickListener(v -> {
             ItemRepository itemRepository = new ItemRepository(this);
             TransactionRepository transactionRepository = new TransactionRepository(this);
-            // 1. Basic empty check
-            if (ValidationUtils.isInputsValid(this,editTextName, editTextType, editTextDescription, editTextQuantity)) {
+            // I validate only the text fields here; type is always valid because it comes from the spinner
+            if (ValidationUtils.isInputsValid(this, editTextName, editTextDescription, editTextQuantity)) {
 
                 try {
-                    // 2. Try to parse technical data
                     int quantity = ConversionUtils.parseQuantity(editTextQuantity.getText().toString());
-                    ItemType type = ConversionUtils.parseType(editTextType.getText().toString());
+                    // I get the selected type from spinner position so there's no invalid type possible
+                    ItemType type = ItemType.values()[spinnerType.getSelectedItemPosition()];
 
-                    // 3. If we got here, data is valid! Create the object
                     Item newItem = new Item();
                     newItem.setName(editTextName.getText().toString().trim());
                     newItem.setType(type);
@@ -58,17 +71,13 @@ public class AddingItemActivity extends AppCompatActivity {
                     transaction.setType(TransactionType.ENTRY);
                     transactionRepository.insertTransaction(transaction);
                     Toast.makeText(this, getString(R.string.msg_item_created_success), Toast.LENGTH_SHORT).show();
-                    CleaningUtils.clearData(editTextName, editTextType, editTextDescription, editTextQuantity,editTextDate);
+                    CleaningUtils.clearData(editTextName, editTextDescription, editTextQuantity, editTextDate);
+                    // I reset the type spinner back to first option after a successful create
+                    spinnerType.setSelection(0);
                 } catch (NumberFormatException e) {
-                    // Catch quantity errors
                     editTextQuantity.setError(getString(R.string.validErrorMSG));
                     Toast.makeText(this, getString(R.string.msg_invalid_quantity), Toast.LENGTH_SHORT).show();
-                } catch (IllegalArgumentException e) {
-                    // Catch Enum errors (e.g., user typed "Pizza" instead of "Meat")
-                    editTextType.setError(getString(R.string.validItemType));
-                    Toast.makeText(this, getString(R.string.msg_invalid_item_type), Toast.LENGTH_SHORT).show();
                 } catch (DateTimeParseException e) {
-                    //catch error related to date format
                     editTextDate.setError(getString(R.string.hint_date_format));
                     Toast.makeText(this, getString(R.string.msg_invalid_date), Toast.LENGTH_SHORT).show();
                 }
@@ -83,7 +92,7 @@ public class AddingItemActivity extends AppCompatActivity {
         editTextDate = findViewById(R.id.etDate);
         editTextDescription = findViewById(R.id.etDescription);
         editTextQuantity = findViewById(R.id.etQuantity);
-        editTextType = findViewById(R.id.etType);
+        spinnerType = findViewById(R.id.spinnerType);
         btnHome = findViewById(R.id.btnHomeAddV);
         btnCreate = findViewById(R.id.btnCreateAddV);
     }
