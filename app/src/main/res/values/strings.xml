@@ -15,6 +15,7 @@
         <item>Meat</item>
         <item>Fish</item>
     </string-array>
+    <string name="search_by_name">Search by name</string>
     <string name="btn_main">Notifications</string>
     <string name="imgDscrip">Select</string>
     <string name="itemImg">Image for the item category</string>

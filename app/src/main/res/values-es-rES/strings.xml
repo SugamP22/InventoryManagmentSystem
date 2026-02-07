@@ -15,6 +15,7 @@
         <item>Carne</item>
         <item>Pescado</item>
     </string-array>
+    <string name="search_by_name">Buscar por nombre</string>
     <string name="btn_main">Notificaciones</string>
     <string name="imgDscrip">Seleccionar</string>
     <string name="home">Inicio</string>
