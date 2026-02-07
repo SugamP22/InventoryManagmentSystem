@@ -148,7 +148,10 @@ public class InfoItemActivity extends AppCompatActivity implements View.OnClickL
     /** I add or remove the amount entered, update the DB, and record a transaction. If remove fails (not enough stock) I show an error. */
     private void handleStockUpdate(boolean isAdding) {
         String input = etAddRemove.getText().toString().trim();
-        if (input.isEmpty()) return;
+        if (input.isEmpty()) {
+            Toast.makeText(this, getString(R.string.EmptyerrorMsg), Toast.LENGTH_SHORT).show();
+            return;
+        };
 
         int amount = Integer.parseInt(input);
 
