@@ -29,4 +29,25 @@ public class ItemFilter {
         }
         return filteredList;
     }
+
+    /** I filter by item name: keep only items whose name contains the query (case-insensitive). Empty or null query returns the list unchanged. */
+    public static ArrayList<Item> filterByName(List<Item> items, String query) {
+        ArrayList<Item> result = new ArrayList<>();
+        if (query == null) {
+            result.addAll(items);
+            return result;
+        }
+        String q = query.trim().toLowerCase();
+        if (q.isEmpty()) {
+            result.addAll(items);
+            return result;
+        }
+        for (Item item : items) {
+            String name = item.getName();
+            if (name != null && name.toLowerCase().contains(q)) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
 }

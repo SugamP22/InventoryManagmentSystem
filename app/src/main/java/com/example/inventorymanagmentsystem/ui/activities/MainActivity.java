@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.SearchView;
 
 import com.example.inventorymanagmentsystem.R;
 import com.example.inventorymanagmentsystem.data.repository.ItemRepository;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private ListView mCustomLv;
     private Spinner spinner;
+    private SearchView searchView;
     private ImageButton languageBtn;
     private TextView tvTitle;
     private AppCompatButton infoBtn;
@@ -61,21 +63,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         CustomAdapterItems adapterItems = new CustomAdapterItems(this, itemList, images);
         mCustomLv.setAdapter(adapterItems);
 
-        // When the user changes the filter I update the list with only the selected category (or all)
+        applyFilters();
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<Item> filteredList = ItemFilter.filter(itemList, position);
-                CustomAdapterItems adapter = (CustomAdapterItems) mCustomLv.getAdapter();
-                if (adapter != null) {
-                    adapter.updateList(filteredList);
-                }
+                applyFilters();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                applyFilters();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return true;
+            }
+        });
+    }
+
+    /** I apply category filter then search-by-name and update the list adapter. */
+    private void applyFilters() {
+        int position = spinner.getSelectedItemPosition();
+        if (position == AdapterView.INVALID_POSITION) position = 0;
+        String query = searchView != null ? searchView.getQuery().toString() : "";
+        ArrayList<Item> byCategory = ItemFilter.filter(itemList, position);
+        ArrayList<Item> byName = ItemFilter.filterByName(byCategory, query);
+        CustomAdapterItems adapter = (CustomAdapterItems) mCustomLv.getAdapter();
+        if (adapter != null) {
+            adapter.updateList(byName);
+        }
     }
 
     /** I reload items from the DB and refresh the list (e.g. when we come back from Add or Detail). */
@@ -88,15 +113,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         loadDataFromDatabase();
-        CustomAdapterItems adapter = (CustomAdapterItems) mCustomLv.getAdapter();
-        if (adapter != null) {
-            adapter.updateList(itemList);
-            spinner.setSelection(0);
-        }
+        applyFilters();
     }
 
     private void connectXML() {
         spinner = findViewById(R.id.spinner_main);
+        searchView = findViewById(R.id.searchView);
         languageBtn = findViewById(R.id.btn_lng);
         tvTitle = findViewById(R.id.textView);
         infoBtn = findViewById(R.id.btn_notice);

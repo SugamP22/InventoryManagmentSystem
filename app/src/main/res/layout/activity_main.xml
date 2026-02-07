@@ -37,13 +37,21 @@
             android:contentDescription="@string/imgDscrip"
             android:scaleType="centerInside" />
     </LinearLayout>
+    <!-- Search: filter list by item name -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_decor_spinner"
+        android:queryHint="@string/search_by_name" />
     <!-- options of items types  -->
     <Spinner
         android:id="@+id/spinner_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/shape_decor_spinner"
         android:gravity="center_horizontal" />
     <!-- list of items  -->
@@ -55,10 +63,10 @@
         android:layout_weight="1"
         android:background="@drawable/shape_notification_list_bg"
         android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"  />
+        android:dividerHeight="0dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
 
 
     <LinearLayout
